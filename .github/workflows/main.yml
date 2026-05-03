@@ -25,4 +25,4 @@ jobs:
         run: newman run petstore_aula.json --reporters cli
 
       - name: Rodando os Testes da Petstore (v2)
-        run: newman run petstore.collection.json -e petstore_environment.json --reporters cli
+        run: newman run petstore.collection.json -e petstore.environment.json --reporters cli
