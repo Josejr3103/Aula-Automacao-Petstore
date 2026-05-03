@@ -1,0 +1,25 @@
+name: Testes Automatizados Postman 
+ 
+on: 
+  push: 
+    branches: [ "main" ]  # Roda toda vez que você enviar código para a main 
+  pull_request: 
+    branches: [ "main" ] 
+ 
+jobs: 
+  run-api-tests: 
+    runs-on: ubuntu-latest  # Usa uma máquina Linux virtual gratuita do GitHub 
+ 
+    steps: 
+      - name: Baixando os arquivos do repositório 
+        uses: actions/checkout@v4 
+      - name: Instalando o Node.js 
+        uses: actions/setup-node@v4 
+        with: 
+          node-version: '20' 
+ 
+      - name: Instalando o Newman (Executor do Postman) 
+        run: npm install -g newman 
+ 
+      - name: Rodando os Testes da Petstore 
+        run: newman run petstore_collection.json --reporters cli
