@@ -9,7 +9,7 @@ class CartPage(BasePage):
     _CHECKOUT_BUTTON = (By.ID, "checkout")
 
     def is_on_cart_page(self) -> bool:
-        self.wait.until(EC.url_contains("cart"))
+        self.wait.until(EC.url_contains("cart.html"))
         return True
 
     def get_item_count(self) -> int:
