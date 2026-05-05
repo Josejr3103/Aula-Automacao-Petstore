@@ -19,16 +19,13 @@ class CartPage(BasePage):
         return len(self.driver.find_elements(*self._CART_ITEMS))
 
     def proceed_to_checkout(self):
-        # 1. Aguarda o botão ficar clicável
         checkout_btn = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(self._CHECKOUT_BUTTON)
         )
-    
-        # 2. Executa o clique
-        checkout_btn.click()
-    
-        # 3. GARANTE a transição (Isso é o que faltava!)
-        # Aguarda até que a URL da página de Checkout apareça
+
+        # ✅ Força o clique via JS para evitar falhas em ambiente headless
+        self.driver.execute_script("arguments[0].click();", checkout_btn)
+
         WebDriverWait(self.driver, 10).until(
             EC.url_contains("checkout-step-one.html")
         )
