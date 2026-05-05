@@ -29,7 +29,16 @@ class CheckoutStepOnePage(BasePage):
         self.type(self._POSTAL_CODE, postal_code)
 
     def continue_to_overview(self):
-        self.click(self._CONTINUE_BUTTON)
+        # ✅ Força clique via JS (consistência com CI/headless)
+        btn = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self._CONTINUE_BUTTON)
+        )
+        self.driver.execute_script("arguments[0].click();", btn)
+
+        # ✅ Aguarda a navegação completar antes de retornar
+        WebDriverWait(self.driver, 10).until(
+            EC.url_contains("checkout-step-two.html")
+        )
 
 
 class CheckoutStepTwoPage(BasePage):
@@ -38,14 +47,24 @@ class CheckoutStepTwoPage(BasePage):
     _SUMMARY_TOTAL = (By.CLASS_NAME, "summary_total_label")
 
     def is_on_checkout_overview(self) -> bool:
+        # ✅ Garante que a página carregou antes de ler o título
+        WebDriverWait(self.driver, 10).until(
+            EC.url_contains("checkout-step-two.html")
+        )
         return self.get_text(self._PAGE_TITLE) == "Checkout: Overview"
 
     def get_total(self) -> str:
         return self.get_text(self._SUMMARY_TOTAL)
 
     def finish_order(self):
-        self.click(self._FINISH_BUTTON)
+        btn = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self._FINISH_BUTTON)
+        )
+        self.driver.execute_script("arguments[0].click();", btn)
 
+        WebDriverWait(self.driver, 10).until(
+            EC.url_contains("checkout-complete.html")
+        )
 
 class CheckoutCompletePage(BasePage):
     _COMPLETE_HEADER = (By.CLASS_NAME, "complete-header")
