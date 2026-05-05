@@ -1,1 +1,36 @@
+# Python
 __pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Ambiente virtual
+venv/
+.venv/
+env/
+
+# Variáveis de ambiente (NUNCA commitar)
+.env
+
+# Relatórios gerados
+reports/report.html
+reports/allure-results/
+allure-report/
+
+# WebDriver binários
+drivers/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# Logs
+*.log

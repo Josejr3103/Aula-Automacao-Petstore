@@ -1,11 +1,6 @@
 import pytest
 from utils.driver_factory import get_driver
-from selenium.webdriver.support.ui import WebDriverWait
 
-
-@pytest.fixture() 
-def wait(driver):
-    return WebDriverWait(driver, 10)
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome")
