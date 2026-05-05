@@ -31,4 +31,6 @@ class InventoryPage(BasePage):
         return int(self.get_text(self._CART_BADGE))
 
     def go_to_cart(self):
-        self.click(self._CART_LINK)
+        cart_icon = self.driver.find_element(By.CLASS_NAME, "shopping_cart_link")
+        # Força o clique via JavaScript para evitar erros de sobreposição de elementos
+        self.driver.execute_script("arguments[0].click();", cart_icon)
