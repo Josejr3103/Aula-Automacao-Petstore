@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
-
 
 class CheckoutStepOnePage(BasePage):
     _PAGE_TITLE = (By.CLASS_NAME, "title")
@@ -10,7 +10,8 @@ class CheckoutStepOnePage(BasePage):
     _CONTINUE_BUTTON = (By.ID, "continue")
 
     def is_on_checkout_step_one(self) -> bool:
-        return self.get_text(self._PAGE_TITLE) == "Checkout: Your Information"
+        self.wait.until(EC.url_contains("checkout-step-one"))
+        return True
 
     def fill_customer_info(self, first_name: str, last_name: str, postal_code: str):
         self.type(self._FIRST_NAME, first_name)
@@ -27,7 +28,8 @@ class CheckoutStepTwoPage(BasePage):
     _SUMMARY_TOTAL = (By.CLASS_NAME, "summary_total_label")
 
     def is_on_checkout_overview(self) -> bool:
-        return self.get_text(self._PAGE_TITLE) == "Checkout: Overview"
+        self.wait.until(EC.url_contains("checkout-step-two"))
+        return True
 
     def get_total(self) -> str:
         return self.get_text(self._SUMMARY_TOTAL)

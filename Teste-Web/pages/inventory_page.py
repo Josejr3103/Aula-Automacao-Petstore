@@ -10,7 +10,8 @@ class InventoryPage(BasePage):
     _CART_LINK = (By.CLASS_NAME, "shopping_cart_link")
 
     def is_on_inventory_page(self) -> bool:
-        return self.get_text(self._PAGE_TITLE) == "Products"
+    self.wait.until(EC.url_contains("inventory"))
+    return True
 
     def add_products_to_cart(self, count: int = 2):
         for _ in range(count):
