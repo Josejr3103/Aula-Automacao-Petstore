@@ -46,5 +46,10 @@ jobs:
       - name: Instalando o Google Chrome
         uses: browser-actions/setup-chrome@v1
 
+      - name: Obtendo o caminho do ChromeDriver
+        run: |
+          DRIVER_PATH=$(which chromedriver 2>/dev/null || find /usr -name chromedriver 2>/dev/null | head -1)
+          echo "CHROMEDRIVER_PATH=$DRIVER_PATH" >> $GITHUB_ENV
+
       - name: Rodando os Testes E2E (SauceDemo)
         run: python -m pytest Teste-Web/tests/ -v
