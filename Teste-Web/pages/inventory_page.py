@@ -21,29 +21,20 @@ class InventoryPage(BasePage):
             button.click()
     
     def wait_for_cart_count(self, expected_count):
-        # 1. Definimos o locator
-        badge_locator = (By.CLASS_NAME, "shopping_cart_badge")
-    
-        # 2. Se expected_count > 0, o badge DEVE aparecer.
-        # Usamos visibility_of_element_located para garantir que ele já foi renderizado.
         if expected_count > 0:
             try:
-                # Aguarda o elemento existir e estar visível
                 WebDriverWait(self.driver, 5).until(
-                    EC.visibility_of_element_located(badge_locator)
+                    EC.visibility_of_element_located(self._CART_BADGE)
                 )
-                # Agora que existe, verifica se o número está correto
                 WebDriverWait(self.driver, 5).until(
-                    EC.text_to_be_present_in_element(badge_locator, str(expected_count))
+                    EC.text_to_be_present_in_element(self._CART_BADGE, str(expected_count))
                 )
             except Exception as e:
                 print(f"DEBUG: Falha ao esperar pelo badge com {expected_count} itens.")
                 raise e
         else:
-            # Se você espera 0 itens, o badge não deve estar no DOM
-            # Podemos usar invisibility_of_element_located
             WebDriverWait(self.driver, 5).until(
-                EC.invisibility_of_element_located(badge_locator)
+                EC.invisibility_of_element_located(self._CART_BADGE)
             )
 
     def get_cart_item_count(self) -> int:
