@@ -13,18 +13,15 @@ class CheckoutStepOnePage(BasePage):
     _CONTINUE_BUTTON = (By.ID, "continue")
 
     def is_on_checkout_step_one(self) -> bool:
-        # 1. Aguarda até 10 segundos para garantir que a página carregou
-        # Substitua 'self._PAGE_TITLE' pelo locator do seu elemento (ex: By.CLASS_NAME, 'title')
-        try:
-            WebDriverWait(self.driver, 10).until(
-                EC.visibility_of_element_located(self._PAGE_TITLE)
-            )
-            # 2. Agora que o elemento está visível, extrai o texto e compara
-            texto_atual = self.get_text(self._PAGE_TITLE).strip()
-            return "Checkout: Your Information" in texto_atual
-        except Exception as e:
-            print(f"DEBUG: Falha ao carregar a página de checkout: {e}")
-            return False
+        WebDriverWait(self.driver, 10).until(
+            EC.url_contains("checkout-step-one.html")
+        )
+        # Captura o texto atual para debug
+        texto_atual = self.get_text(self._PAGE_TITLE)
+        print(f"\nDEBUG: Texto capturado na página de Checkout: '{texto_atual}'")
+    
+        # Validação com tratamento de espaços
+        return "Checkout: Your Information" in texto_atual.strip()
 
     def fill_customer_info(self, first_name: str, last_name: str, postal_code: str):
         self.type(self._FIRST_NAME, first_name)
