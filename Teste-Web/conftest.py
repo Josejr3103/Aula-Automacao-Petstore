@@ -4,7 +4,7 @@ from utils.driver_factory import get_driver
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome")
-    parser.addoption("--headless", action="store", default="False")
+    parser.addoption("--headless", action="store", default="true")
 
 
 @pytest.fixture(scope="session")
