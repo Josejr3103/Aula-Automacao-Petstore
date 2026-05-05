@@ -14,11 +14,12 @@ class InventoryPage(BasePage):
         return True
 
     def add_products_to_cart(self, count: int = 2):
-        for _ in range(count):
+        for i in range(count):
             buttons = self.wait.until(
                 EC.presence_of_all_elements_located(self._ADD_TO_CART_BUTTONS)
             )
             buttons[0].click()
+            self.wait.until(EC.text_to_be_present_in_element(self._CART_BADGE, str(i + 1)))
 
     def get_cart_item_count(self) -> int:
         return int(self.get_text(self._CART_BADGE))
