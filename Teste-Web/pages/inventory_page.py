@@ -13,13 +13,13 @@ class InventoryPage(BasePage):
         self.wait.until(EC.url_contains("inventory"))
         return True
 
-    def add_products_to_cart(self, count: int = 2):
-        for i in range(count):
-            buttons = self.wait.until(
-                EC.presence_of_all_elements_located(self._ADD_TO_CART_BUTTONS)
-            )
-            buttons[0].click()
-            self.wait.until(EC.text_to_be_present_in_element(self._CART_BADGE, str(i + 1)))
+    def add_products_to_cart(self, quantity):
+        buttons = self.driver.find_elements(*self._ADD_TO_CART_BUTTONS)
+        for i in range(quantity):
+            buttons[i].click()
+            # Em vez de esperar pelo texto, esperamos pela atualização da contagem
+            # Aumentamos o tempo caso o CI precise de um pouco mais de fôlego
+            self.wait.until(lambda d: d.find_element(*self._CART_BADGE).text == str(i + 1))
 
     def get_cart_item_count(self) -> int:
         return int(self.get_text(self._CART_BADGE))
