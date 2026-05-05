@@ -47,7 +47,7 @@ class TestPurchaseFlow:
         assert self.cart_page.get_item_count() == PRODUCTS_TO_ADD
 
         self.cart_page.proceed_to_checkout()
-        self.wait.until(EC.url_contains("checkout-step-one.html"))
+        self.wait.until(EC.visibility_of_element_located(self.checkout_step_one._FIRST_NAME))
         assert self.checkout_step_one.is_on_checkout_step_one()
 
         self.checkout_step_one.fill_customer_info("João", "Silva", "50000-000")

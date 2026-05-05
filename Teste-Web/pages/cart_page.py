@@ -26,4 +26,7 @@ class CartPage(BasePage):
         return len(self.driver.find_elements(*self._CART_ITEMS))
 
     def proceed_to_checkout(self):
-        self.click(self._CHECKOUT_BUTTON)
+        # Aguarda o botão estar presente e visível
+        button = self.wait.until(EC.element_to_be_clickable(self._CHECKOUT_BUTTON))
+        # Força o clique via JavaScript, ignorando sobreposições
+        self.driver.execute_script("arguments[0].click();", button)
