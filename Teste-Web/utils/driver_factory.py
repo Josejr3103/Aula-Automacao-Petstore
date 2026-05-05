@@ -11,9 +11,10 @@ def get_driver(browser: str = "chrome", headless: bool = True):
         options = webdriver.ChromeOptions()
         if headless:
             options.add_argument("--headless=new")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--window-size=1920,1080")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--window-size=1920,1080")
+            options.add_argument("--disable-gpu")
 
         driver_path = os.environ.get("CHROMEDRIVER_PATH")
         service = ChromeService(executable_path=driver_path) if driver_path else ChromeService()
