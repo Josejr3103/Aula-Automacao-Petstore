@@ -38,18 +38,15 @@ jobs:
       - name: Instalando o Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.11'
+          cache: 'pip'
 
       - name: Instalando as dependências
-        run: pip install -r Teste-Web/requirements.txt
-
-      - name: Instalando o Google Chrome
-        uses: browser-actions/setup-chrome@v1
-
-      - name: Obtendo o caminho do ChromeDriver
         run: |
-          DRIVER_PATH=$(which chromedriver 2>/dev/null || find /usr -name chromedriver 2>/dev/null | head -1)
-          echo "CHROMEDRIVER_PATH=$DRIVER_PATH" >> $GITHUB_ENV
+          python -m pip install --upgrade pip
+          pip install -r Teste-Web/requirements.txt
 
       - name: Rodando os Testes E2E (SauceDemo)
-        run: python -m pytest Teste-Web/tests/ -v -s
+        run: |
+          cd Teste-Web
+          pytest -v -s
