@@ -1,28 +1,50 @@
-name: Testes Automatizados Postman 
- 
-on: 
-  push: 
-    branches: [ "main" ]  # Roda toda vez que você enviar código para a main 
-  pull_request: 
-    branches: [ "main" ] 
- 
-jobs: 
-  run-api-tests: 
-    runs-on: ubuntu-latest  # Usa uma máquina Linux virtual gratuita do GitHub 
- 
-    steps: 
-      - name: Baixando os arquivos do repositório 
-        uses: actions/checkout@v4 
-      - name: Instalando o Node.js 
-        uses: actions/setup-node@v4 
-        with: 
-          node-version: '20' 
- 
-      - name: Instalando o Newman (Executor do Postman) 
-        run: npm install -g newman 
- 
+name: Testes Automatizados
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  run-api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixando os arquivos do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalando o Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalando o Newman (Executor do Postman)
+        run: npm install -g newman
+
       - name: Rodando os Testes da Petstore (v1)
-        run: newman run petstore_aula.json --reporters cli
+        run: newman run Teste-API/petstore_aula.json --reporters cli
 
       - name: Rodando os Testes da Petstore (v2)
-        run: newman run petstore.collection.json -e petstore.environment.json --reporters cli
+        run: newman run Teste-API/petstore.collection.json -e Teste-API/petstore.environment.json --reporters cli
+
+  run-web-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixando os arquivos do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalando o Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalando as dependências
+        run: pip install -r Teste-Web/requirements.txt
+
+      - name: Instalando o Google Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Rodando os Testes E2E (SauceDemo)
+        run: python -m pytest Teste-Web/tests/ -v
