@@ -25,4 +25,4 @@ class InventoryPage(BasePage):
         return int(self.get_text(self._CART_BADGE))
 
     def go_to_cart(self):
-        self.click(self._CART_LINK)
+        self.driver.find_element(*self._CART_LINK).click()
