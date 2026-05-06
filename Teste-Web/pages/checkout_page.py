@@ -16,11 +16,7 @@ class CheckoutStepOnePage(BasePage):
         WebDriverWait(self.driver, 10).until(
             EC.url_contains("checkout-step-one.html")
         )
-        # Captura o texto atual para debug
         texto_atual = self.get_text(self._PAGE_TITLE)
-        print(f"\nDEBUG: Texto capturado na página de Checkout: '{texto_atual}'")
-    
-        # Validação com tratamento de espaços
         return "Checkout: Your Information" in texto_atual.strip()
 
     def fill_customer_info(self, first_name: str, last_name: str, postal_code: str):
@@ -29,13 +25,11 @@ class CheckoutStepOnePage(BasePage):
         self.type(self._POSTAL_CODE, postal_code)
 
     def continue_to_overview(self):
-        # ✅ Força clique via JS (consistência com CI/headless)
         btn = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(self._CONTINUE_BUTTON)
         )
         self.driver.execute_script("arguments[0].click();", btn)
 
-        # ✅ Aguarda a navegação completar antes de retornar
         WebDriverWait(self.driver, 10).until(
             EC.url_contains("checkout-step-two.html")
         )
@@ -47,7 +41,6 @@ class CheckoutStepTwoPage(BasePage):
     _SUMMARY_TOTAL = (By.CLASS_NAME, "summary_total_label")
 
     def is_on_checkout_overview(self) -> bool:
-        # ✅ Garante que a página carregou antes de ler o título
         WebDriverWait(self.driver, 10).until(
             EC.url_contains("checkout-step-two.html")
         )

@@ -12,7 +12,6 @@ class CartPage(BasePage):
 
     def is_on_cart_page(self) -> bool:
         texto_capturado = self.get_text(self._PAGE_TITLE)
-        print(f"\nDEBUG: Texto capturado no título: '{texto_capturado}'")
         return texto_capturado == "Your Cart"
 
     def get_item_count(self) -> int:
@@ -23,7 +22,6 @@ class CartPage(BasePage):
             EC.element_to_be_clickable(self._CHECKOUT_BUTTON)
         )
 
-        # ✅ Força o clique via JS para evitar falhas em ambiente headless
         self.driver.execute_script("arguments[0].click();", checkout_btn)
 
         WebDriverWait(self.driver, 10).until(

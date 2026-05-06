@@ -33,12 +33,11 @@ class TestPurchaseFlow:
 
         assert self.inventory_page.is_on_inventory_page()
 
-        self.inventory_page.add_products_to_cart(PRODUCTS_TO_ADD) # Certifique-se que esse método faz os 2 cliques
-        self.inventory_page.wait_for_cart_count(PRODUCTS_TO_ADD)  # Adicione este passo de espera
+        self.inventory_page.add_products_to_cart(PRODUCTS_TO_ADD)
+        self.inventory_page.wait_for_cart_count(PRODUCTS_TO_ADD)
         assert self.inventory_page.get_cart_item_count() == PRODUCTS_TO_ADD
 
         self.inventory_page.go_to_cart()
-        print(f"URL atual: {self.driver.current_url}")
         assert self.cart_page.is_on_cart_page()
         assert self.cart_page.get_item_count() == PRODUCTS_TO_ADD
 

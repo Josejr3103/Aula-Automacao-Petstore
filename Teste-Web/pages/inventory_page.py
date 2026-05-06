@@ -30,7 +30,6 @@ class InventoryPage(BasePage):
                     EC.text_to_be_present_in_element(self._CART_BADGE, str(expected_count))
                 )
             except Exception as e:
-                print(f"DEBUG: Falha ao esperar pelo badge com {expected_count} itens.")
                 raise e
         else:
             WebDriverWait(self.driver, 5).until(
@@ -42,5 +41,4 @@ class InventoryPage(BasePage):
 
     def go_to_cart(self):
         cart_icon = self.driver.find_element(By.CLASS_NAME, "shopping_cart_link")
-        # Força o clique via JavaScript para evitar erros de sobreposição de elementos
         self.driver.execute_script("arguments[0].click();", cart_icon)
